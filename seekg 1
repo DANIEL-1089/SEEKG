@@ -1,0 +1,61 @@
+#include <iostream>
+#include <ctime>
+#include <wchar.h>
+#include <Windows.h>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <stdlib.h>
+#include <cstring>
+#include <conio.h>
+#include <iomanip>
+#include <process.h>
+#include <ctime>
+#include <cstdlib>
+#include <typeinfo>
+#include <fstream>
+
+
+
+using namespace std;
+class person {
+protected:
+    char name[80];
+    int age;
+public:
+    void getData() {
+        cout << "\n Enter a name: ";
+        cin >> name;
+        cout << "Enter the age: ";
+        cin >> age;
+    }
+    void showData(void) {
+        cout << "\n Name: " << name;
+        cout << "\n The age: " << age;
+    }
+};
+
+int main()
+{
+    person pers;
+    ifstream infile;
+    infile.open("GROUP.DAT", ios::in | ios::binary);
+    infile.seekg(0, ios::end);
+
+    int endposition = infile.tellg();
+    int n = endposition / sizeof(person);
+    cout << "\nIn the file " << n << " human(s)";
+
+    cout << "\nEnter the person's number: ";
+    cin >> n;
+    int position = (n - 1) * sizeof(person);
+
+    infile.seekg(position);
+
+    infile.read(reinterpret_cast<char*>(&pers), sizeof(pers));
+    pers.showData();
+    cout << endl;
+
+    return 0;
+}
